@@ -1,0 +1,18 @@
+[
+	{
+		"caption":"Search & Browse",
+		"arialabel":"",
+		"mdicon":"search",
+		"abstract":"",
+		"startpage":"gl.search",
+		"items":""
+	},
+	{
+		"caption":"About the Project",
+		"arialabel":"",
+		"mdicon":"info_outline",
+		"abstract":"",
+		"startpage":"gl.about",
+		"items":""
+	}
+]

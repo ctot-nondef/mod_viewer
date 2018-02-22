@@ -1,0 +1,42 @@
+<div class="pagewrapper" style="height: 100vh;overflow-y: scroll; overflow-x: hidden;" layout="column" layout-align="start start" layout-padding>
+  <div class="card maincard" layout="row" layout-align="center center">
+    <div>For more details, please also consider the squeezes</div>
+    <md-button class="md-primary md-raised" ng-disabled='{{currentLink==""}}' aria-label="TEI encoded texts" ng-href='{{currentLink}}'>
+      <md-icon>description</md-icon>
+      Full record
+    </md-button>
+  </div>
+  <teidoc class="maincard" source="{{xmlstr}}"></teidoc>
+</div>
+<md-sidenav
+    class="md-sidenav-right md-whiteframe-0dp"
+    md-component-id="right"
+    md-is-open="big"
+    md-whiteframe="4"
+    md-disable-backdrop="true">
+  <md-content >
+    <md-table-pagination md-limit="Model.Pagesize" md-limit-options="[10, 20, 40, 100]" md-page="Model.Page" md-total="{{Model.Total}}" md-on-paginate="getPage"></md-table-pagination>
+   	<md-table-container>
+   	  <table md-table md-progress="promise">
+   	    <thead md-head md-order="" md-on-reorder="getNewOrder">
+   	      <tr md-row>
+            <th md-column ></th>
+   	        <th md-column md-order-by="title"><span>Title</span></th>
+   	        <th md-column md-order-by="inscription.language"><span>Language</span></th>
+   	      </tr>
+   	    </thead>
+   	    <tbody md-body>
+   	      <tr md-row
+   	      		ng-repeat="(key, trans) in Model.Result" ng-click='selSite(key)' ng-controller="SqueezeByAttr" squeezeid="{{key}}"
+   	      		class="vspinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}" >
+       			<td md-cell>
+       				<img ng-src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="squeezeicon" alt="{{squeeze['reproduction.reference'][0]}}" />
+       			</td>
+  	        <td md-cell>{{squeeze.title[0]}}</td>
+  	        <td md-cell>{{squeeze['inscription.language'][0]}}</td>
+   	      </tr>
+   	    </tbody>
+   	  </table>
+   	</md-table-container>
+  </md-content>
+</md-sidenav>

@@ -1,0 +1,18 @@
+[
+  {
+    "position":1,
+    "title":"About the Project",
+    "rows":"2",
+    "cols":"2",
+    "bgImg":"media/Eduard_Glaser.jpg",
+    "target":"gl.about"
+  },
+  {
+    "position":10,
+    "title":"Map of Sites",
+    "rows":"1",
+    "cols":"2",
+    "bgImg":"media/map.PNG",
+    "target":"gl.map"
+  }
+]

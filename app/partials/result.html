@@ -12,7 +12,7 @@
 		            md-colspan-sm="1"
 		            md-colspan-xs="1"
 		            class="spinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}">
-		  	<img ng-src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value='+squeeze['reproduction.reference'][0]+'&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" style="width:100%;" />
+		  	<img ng-src="{{'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value='+squeeze['reproduction.reference'][0]+'&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" style="width:100%;" />
 		  	<md-grid-tile-footer layout="column" layout-align="center center">
 		  		<h5 >{{squeeze.title[0]}}</h5>
 		  	</md-grid-tile-footer>
@@ -28,8 +28,6 @@
 	      <tr md-row>
 	      	<th md-column><span></span></th>
 	        <th md-column md-order-by="title"><span>Title</span></th>
-	        <th md-column md-order-by="inscription.language"><span>Language</span></th>
-	        <th md-column md-order-by="production.place"><span>Site</span></th>
 	        <th md-column md-order-by=""><span>Actions</span></th>
 	      </tr>
 	    </thead>
@@ -40,30 +38,22 @@
 	      		ng-repeat="squeeze in Model.Result"
 	      		ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})"
 	      		class="vspinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}" >
-			<td md-cell>
-				<img ng-src="{{'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="squeezeicon" alt="{{squeeze['reproduction.reference'][0]}}" />
-			</td>
-	        <td md-cell>{{squeeze.title[0]}}</td>
-	        <td md-cell>{{squeeze['inscription.language'][0]}}</td>
-	        <td md-cell>{{squeeze['production.place'][0]}}</td>
+					<td md-cell>
+						<img ng-src="{{'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze.Reproduction[0]['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="squeezeicon" alt="{{squeeze['reproduction.reference'][0]}}" />
+					</td>
+	        <td md-cell>{{squeeze.Title["0"].title["0"].value["0"]}}</td>
 	        <td md-cell>
 						<div class="tabletoolbar" layout="row" layout-align="end" ng-if="!squeeze.position" ng-click="$event.stopPropagation()">
-							<md-button class="md-icon-button" aria-label="Details" ui-sref="{{'gl.singleRecord({refID: '+squeeze.priref[0]+'})'}}">
+							<md-button class="md-icon-button" aria-label="Details" ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})">
 								<md-icon md-colors="{color: 'primary-800'}" >library_books</md-icon>
 									<md-tooltip md-direction="bottom">
 											Details
 										</md-tooltip>
 							</md-button>
-							<md-button class="md-icon-button" aria-label="View Image" ui-sref="gl.fullImage({imgID: '{{squeeze['reproduction.reference'][0]}}'})">
+							<md-button class="md-icon-button" aria-label="View Image" ui-sref="gl.fullImage({imgID: '{{squeeze.link}}'})">
 								<md-icon md-colors="{color: 'primary-800'}" >code</md-icon>
 									<md-tooltip md-direction="bottom">
 											View Image
-										</md-tooltip>
-							</md-button>
-							<md-button class="md-icon-button" aria-label="View Scan" ui-sref="gl.scan({scanID: '{{squeeze.object_number[0]}}'})">
-								<md-icon md-colors="{color: 'primary-800'}" >3d_rotation</md-icon>
-									<md-tooltip md-direction="bottom">
-											View 3D Scan
 										</md-tooltip>
 							</md-button>
 						</div>

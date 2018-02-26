@@ -31,11 +31,8 @@ GlaserApp
   $scope.Model = {};
 
   $scope.Model.total,$scope.Model.totalURI  = "counting..."
-  opacsearch.getPointerList('archive','7').then(function(res){
+  opacsearch.getPointerList('collect','14').then(function(res){
     $scope.Model.total = res.data.adlibJSON.recordList.record[0]['hits'][0];
-  });
-  opacsearch.getPointerList('archive','10').then(function(res){
-    $scope.Model.totalURI = res.data.adlibJSON.recordList.record[0]['hits'][0];
   });
   $scope.Model.osData = opacsearch;
   //this needs to contain normalization routines, autocompleters....
@@ -46,9 +43,9 @@ GlaserApp
     if ($scope.Model.keyword) {
       $scope.Model.keywords = $scope.Model.keyword.split(" ");
       $scope.Model.keywords.forEach(function(entry){
-        $scope.Model.Query.push(JSON.parse('{"s1":"'+entry+'"}'));
+        $scope.Model.Query.push(JSON.parse('{"title":"'+entry+'"}'));
       });
-      $scope.Model.Query.push(JSON.parse('{"part_of_reference":"*BA-3-27-A*"}'));
+      $scope.Model.Query.push(JSON.parse('{"title":"Wien I, Hofburg,*"}'));
       opacsearch.updateHistory($scope.Model.keyword, $scope.Model.Query, undefined, undefined);
       $state.go('gl.results', {queryID: "1", pageNo: "1"});
     }
@@ -97,6 +94,10 @@ GlaserApp
       $scope.Model.Total = res.data.adlibJSON.diagnostic.hits;
       $scope.Model.Page = $stateParams.pageNo;
       $scope.Model.Pagesize = opacsearch.pagesize;
+      var idx = res.data.adlibJSON.recordList.record.length-1;
+      while(idx--) {
+        res.data.adlibJSON.recordList.record[idx+1].link = encodeURI(res.data.adlibJSON.recordList.record[idx+1].Reproduction[0]["reproduction.reference"][0]);
+      }
       $scope.Model.Result = res.data.adlibJSON.recordList.record;
       console.log($scope.Model.Result);
     };
@@ -126,7 +127,7 @@ GlaserApp
     $scope.promise = opacsearch.history.result[$stateParams.queryID-1][$stateParams.pageNo];
   }
   else {
-    $scope.promise = opacsearch.getRecordsbyIndex('collect.inf', opacsearch.history.query[$stateParams.queryID-1],"AND",undefined,['priref','production.place','production.place.lref','production.place.context','production.place.uri','inscription.language', 'title', 'reproduction.reference','object_number'],$stateParams.pageNo);
+    $scope.promise = opacsearch.getRecordsbyIndex('collect.inf', opacsearch.history.query[$stateParams.queryID-1],"AND",undefined,['priref', 'title', 'reproduction.reference','object_number'],$stateParams.pageNo);
     opacsearch.updatePage($stateParams.queryID-1, $stateParams.pageNo, $scope.promise);
   }
   $scope.promise.then($scope.update);

@@ -290,11 +290,8 @@ ExistService.service('ExistService', function($http, $localStorage, $q, $log){
     if(!pageno) pageno = 1;
     if(!pagesize) pagesize = this.ExistConfig.PAGESIZE;
 		return $q(function(resolve, reject){
-			$http.get(
-				this.ExistConfig.BASEURL+'json'+'?page[number]='+pageno+'&page[size]='+pagesize,
-				{
-				}
-			).then(
+			$http.get(this.ExistConfig.BASEURL+'json'+'?page[number]='+pageno+'&page[size]='+pagesize,{})
+      .then(
 			function(res){
         this.Page = {};
         var idx = res.data.data.length;

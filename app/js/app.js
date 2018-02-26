@@ -75,6 +75,15 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
             }
         }
     })
+    .state('gl.singleRecord',{
+        url: '/rec/:refID',
+        views: {
+            'content@': {
+                templateUrl: 'partials/singleRecord.html',
+                controller: 'GlaserSingleRecord'
+            }
+        }
+    })
     .state('gl.fullImage',{
         url: '/img/:imgID',
         views: {

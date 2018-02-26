@@ -3,11 +3,11 @@
 	    md-cols="2" md-cols-sm="2" md-cols-md="5" md-cols-gt-md="8" md-row-height="1:1"
 	    md-gutter="8px" md-gutter-gt-sm="4px" layout="row" layout-align="center start" ng-animate="'spinentry'">
 			<md-grid-tile ng-repeat="squeeze in Model.PointerList" style="cursor: pointer;"
-										ui-sref="{{squeeze.position>0 ? squeeze.target : 'gl.singleRecord({refID: '+squeeze.priref[0]+'})'}}"
+										ui-sref="gl.fullImage({imgID: '{{squeeze['reproduction.reference'][0]}}'})"
 										md-rowspan="{{squeeze.position>0 ? squeeze.rows : 1}}"
 										md-colspan="{{squeeze.position>0 ? squeeze.cols : 1}}"
 										class="spinentry raise" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}">
-					<img preload-image default-image="media/preload.jpg" ng-src="{{squeeze.position>0 ? squeeze.bgImg :'http://opacbasis.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value='+squeeze['reproduction.reference'][0]+'&width=200&height=200&scalemode=fill&fillmode=center'}}" style="width:100%;" />
+					<img preload-image default-image="media/preload.jpg" ng-src="{{squeeze.position>0 ? squeeze.bgImg :'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value='+squeeze['reproduction.reference'][0]+'&width=200&height=200&scalemode=fill&fillmode=center'}}" style="width:100%;" />
 					<md-grid-tile-footer layout="column" layout-align="center center">
 						<h5 >{{squeeze.position>0 ? squeeze.title : squeeze.title[0]}}</h5>
 					</md-grid-tile-footer>
@@ -22,12 +22,6 @@
 							<md-icon md-colors="{color: 'primary-800'}" >code</md-icon>
 								<md-tooltip md-direction="bottom">
 										View Image
-									</md-tooltip>
-						</md-button>
-						<md-button class="md-icon-button" aria-label="View Scan" ui-sref="gl.scan({scanID: '{{squeeze.object_number[0]}}'})">
-							<md-icon md-colors="{color: 'primary-800'}" >3d_rotation</md-icon>
-								<md-tooltip md-direction="bottom">
-										View 3D Scan
 									</md-tooltip>
 						</md-button>
 					</div>

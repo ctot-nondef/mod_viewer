@@ -14,17 +14,15 @@ GlaserApp
   $scope.Model = {};
   $rootScope.loading.progress = true;
   opacsearch.updateSize("40");
-  opacsearch.getRecordsbyPointer('archive','7',[] ,'1','40').then(
+  opacsearch.getRecordsbyPointer('collect','14',[] ,'1','40').then(
     function(res){
       var tiles = res.data.adlibJSON.recordList.record;
-      $http.get('static/starttiles.json').then(function(ntiles){
-        for (var tile in ntiles.data) {
-          console.log(ntiles.data[tile]);
-          tiles[ntiles.data[tile].position] = ntiles.data[tile];
-        }
-        $scope.Model.PointerList = tiles;
-        $rootScope.loading.progress = false;
-      })
+      for (var tile in tiles) {
+        console.log(tiles[tile]['reproduction.reference']);
+        tiles[tile]['reproduction.reference'][0] = encodeURI(tiles[tile]['reproduction.reference'][0]);
+      }
+      $scope.Model.PointerList = tiles;
+      $rootScope.loading.progress = false;
     },
     function(err){ console.log('err: ', err); }
   );

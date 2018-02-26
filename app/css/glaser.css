@@ -59,7 +59,7 @@ md-icon.navicon {
 }
 
 md-icon.panelicon {
-  color: #0D47A1!important;
+  color: #d8Be87!important;
   font-size: 45px;
   margin-right: 25px;
   height: 50px;
@@ -71,7 +71,7 @@ md-icon.menuicon {
   margin: 20px;
   top: 0px;
   line-height: 5px;
-  color: #0D47A1!important;
+  color: #d8Be87!important;
 }
 
 #closeicon {
@@ -124,7 +124,7 @@ md-icon.menuicon {
   margin: 20px;
   top: 0px;
   line-height: 5px;
-  color: #0D47A1!important;
+  color: #d8Be87!important;
 }
 
 #closeicon {
@@ -334,7 +334,7 @@ tr:hover .tabletoolbar {
 #sidebar{
   width: 100px;
   height: 100%;
-  background-color: #0D47A1;
+  background-color: #d8Be87;
   top:0px;
   position: fixed!important;
   z-index: 1000;
@@ -438,7 +438,7 @@ md-table-container {
 #sidebar{
   width: 100px;
   height: 100%;
-  background-color: #0D47A1;
+  background-color: #d8Be87;
   top:0px;
   position: fixed!important;
   z-index: 1000;

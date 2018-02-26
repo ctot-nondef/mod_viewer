@@ -23,7 +23,7 @@
 	<h2 class="md-display-1">Search Results</h2>
 	<md-table-pagination md-limit="Model.Pagesize" md-limit-options="[10, 20, 40, 100]" md-page="Model.Page" md-total="{{Model.Total}}" md-on-paginate="getPage" md-page-select></md-table-pagination>
 	<md-table-container>
-	  <table md-table md-row-select multiple ng-model="selected" md-progress="promise">
+	  <table md-table multiple ng-model="selected" md-progress="promise">
 	    <thead md-head md-order="" md-on-reorder="getNewOrder">
 	      <tr md-row>
 	      	<th md-column><span></span></th>
@@ -35,13 +35,13 @@
 	      <tr md-row
 	      		md-select="squeeze"
 	      		md-select-id="{{squeeze.priref[0]}}"
-	      		ng-repeat="squeeze in Model.Result"
+	      		ng-repeat="squeeze in Model.PointerList"
 	      		ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})"
 	      		class="vspinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}" >
 					<td md-cell>
-						<img ng-src="{{'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze.Reproduction[0]['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="squeezeicon" alt="{{squeeze['reproduction.reference'][0]}}" />
+						<img ng-src="{{'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="squeezeicon" alt="{{squeeze['reproduction.reference'][0]}}" />
 					</td>
-	        <td md-cell>{{squeeze.Title["0"].title["0"].value["0"]}}</td>
+	        <td md-cell>{{squeeze.title["0"]}}</td>
 	        <td md-cell>
 						<div class="tabletoolbar" layout="row" layout-align="end" ng-if="!squeeze.position" ng-click="$event.stopPropagation()">
 							<md-button class="md-icon-button" aria-label="Details" ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})">

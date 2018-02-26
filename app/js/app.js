@@ -67,7 +67,7 @@ function config($stateProvider, $urlRouterProvider, $locationProvider, $compileP
         }
     })
     .state('gl.results',{
-        url: '/results/:queryID/:pageNo',
+        url: '/results',
         views: {
             'content@': {
                 templateUrl: 'partials/result.html',

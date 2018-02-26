@@ -57,7 +57,7 @@ GlaserApp
     opacsearch.clearHistory();
   }
 }])
-.controller('GlaserResultList',['$scope','$http', '$state', '$stateParams', 'opacsearch', function($scope, $http, $state, $stateParams, opacsearch){
+.controller('GlaserResultList',['$scope','$http', '$state', '$stateParams', 'opacsearch', '$rootScope', function($scope, $http, $state, $stateParams, opacsearch, $rootScope){
   //********* DECLARATIVE PART *********************************************
     $scope.Model = {};
     $scope.uiview = {"menuOpen":false};
@@ -118,19 +118,19 @@ GlaserApp
     }
   //********* END OF DECLARATIVE PART **************************************
   //************************************************************************
-  // if the url is fucked up, go back to search
-  if (!$stateParams.queryID || !$stateParams.pageNo) $state.go('gl.search');
-  //************************************************************************
-  // if we got the page in question already in the history, take it, otherwise go get it and cache it
-  if(opacsearch.history.result[$stateParams.queryID-1] && opacsearch.history.result[$stateParams.queryID-1][$stateParams.pageNo] && opacsearch.history.result[$stateParams.queryID-1][$stateParams.pageNo]['$$state'] && opacsearch.history.result[$stateParams.queryID-1][$stateParams.pageNo]['$$state']['status'] == 1) {
-    console.log(opacsearch.history.result[$stateParams.queryID-1]);
-    $scope.promise = opacsearch.history.result[$stateParams.queryID-1][$stateParams.pageNo];
-  }
-  else {
-    $scope.promise = opacsearch.getRecordsbyIndex('collect.inf', opacsearch.history.query[$stateParams.queryID-1],"AND",undefined,['priref', 'title', 'reproduction.reference','object_number'],$stateParams.pageNo);
-    opacsearch.updatePage($stateParams.queryID-1, $stateParams.pageNo, $scope.promise);
-  }
-  $scope.promise.then($scope.update);
+  $rootScope.loading.progress = true;
+  opacsearch.getRecordsbyPointer('collect','14',[] ,'1','440').then(
+    function(res){
+      var tiles = res.data.adlibJSON.recordList.record;
+      for (var tile in tiles) {
+        //console.log(tiles[tile]['reproduction.reference']);
+        tiles[tile].link = encodeURI(tiles[tile]['reproduction.reference'][0]);
+      }
+      $scope.Model.PointerList = tiles;
+      $rootScope.loading.progress = false;
+    },
+    function(err){ console.log('err: ', err); }
+  );
 }])
 .controller('GlaserSingleRecord', ['$scope', '$stateParams', 'opacsearch','GeoNamesServices','leafletData', 'leafletBoundsHelpers','ExistService', function($scope, $stateParams, opacsearch, GeoNamesServices, leafletData, leafletBoundsHelpers, ExistService) {
   $scope.Model = {refID: $stateParams.refID};

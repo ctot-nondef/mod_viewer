@@ -3,8 +3,8 @@
     <md-content layout-padding>
       <div>
         <h2 class="md-display-1">Simple Search</h2>
-        <div><span>Search the Glaser Collection for a sequence of keywords. <br>
-        Separate them by SPACEs. Use * as wildcards.</span></div>
+        <div><span>Filter the Collection for a sequence of keywords. <br>
+        </span></div>
         <md-input-container class="md-block" >
           <label>Search Keyword(s)</label>
           <input ng-model="Model.keyword">
@@ -16,8 +16,7 @@
   <md-whiteframe class="md-whiteframe-3dp card subcard" layout="column" flex="noshrink" layout-align="start start">
     <md-content layout-padding>
       <div>
-        <h3 class="md-title"><md-icon class="panelicon">info</md-icon>Information</h3>
-        <div><span>Simple Search currently queries the Fields 'Title' and 'Translation' using an OR logic. And advanced search interface allowing for more complex queries will be available shortly.</span><br><br>
+        <h3 class="md-title"><md-icon class="panelicon">info</md-icon>Information</h3>        
         <span>The Database currently contains Data on <br><h2>{{Model.total}}</h2> Squeezes.</span>
         </div>
       </div>

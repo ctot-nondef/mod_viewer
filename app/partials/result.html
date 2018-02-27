@@ -1,86 +1,71 @@
-<div ng-if="uiview.currentView=='grid'">
-	<h2 class="md-display-1">Search Results</h2>
-	<md-table-pagination md-limit="Model.Pagesize" md-limit-options="[10, 20, 40, 100]" md-page="Model.Page" md-total="{{Model.Total}}" md-on-paginate="getPage" md-page-select></md-table-pagination>
-	<md-grid-list
-	    md-cols="2" md-cols-sm="3" md-cols-md="5" md-cols-gt-md="8"
-	    md-row-height-gt-md="1:1" md-row-height="1:1"
-	    md-gutter="8px" md-gutter-gt-sm="4px" layout="row" layout-align="center start" ng-animate="'spinentry'">
-		<md-grid-tile ng-repeat="squeeze in Model.Result"
-					ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})"
-		            md-rowspan="1"
-		            md-colspan="1"
-		            md-colspan-sm="1"
-		            md-colspan-xs="1"
-		            class="spinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}">
-		  	<img ng-src="{{'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value='+squeeze['reproduction.reference'][0]+'&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" style="width:100%;" />
-		  	<md-grid-tile-footer layout="column" layout-align="center center">
-		  		<h5 >{{squeeze.title[0]}}</h5>
-		  	</md-grid-tile-footer>
-		</md-grid-tile>
-	</md-grid-list>
-</div>
-<div ng-if="uiview.currentView=='list'" class="pagewrapper" layout="column" layout-align="start start" layout-padding>
-	<h2 class="md-display-1">Search Results</h2>
-	<md-table-pagination md-limit="Model.Pagesize" md-limit-options="[10, 20, 40, 100]" md-page="Model.Page" md-total="{{Model.Total}}" md-on-paginate="getPage" md-page-select></md-table-pagination>
-	<md-table-container>
-	  <table md-table multiple ng-model="selected" md-progress="promise">
-	    <thead md-head md-order="" md-on-reorder="getNewOrder">
-	      <tr md-row>
-	      	<th md-column><span></span></th>
-	        <th md-column md-order-by="title"><span>Title</span></th>
-	        <th md-column md-order-by=""><span>Actions</span></th>
-	      </tr>
-	    </thead>
-	    <tbody md-body>
-	      <tr md-row
-	      		md-select="squeeze"
-	      		md-select-id="{{squeeze.priref[0]}}"
-	      		ng-repeat="squeeze in Model.PointerList"
-	      		ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})"
-	      		class="vspinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}" >
-					<td md-cell>
-						<img ng-src="{{'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze['reproduction.reference'][0] + '&width=200&height=200&scalemode=fill&fillmode=center&imageformat=jpg'}}" class="squeezeicon" alt="{{squeeze['reproduction.reference'][0]}}" />
-					</td>
-	        <td md-cell>{{squeeze.title["0"]}}</td>
-	        <td md-cell>
-						<div class="tabletoolbar" layout="row" layout-align="end" ng-if="!squeeze.position" ng-click="$event.stopPropagation()">
-							<md-button class="md-icon-button" aria-label="Details" ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})">
-								<md-icon md-colors="{color: 'primary-800'}" >library_books</md-icon>
-									<md-tooltip md-direction="bottom">
-											Details
-										</md-tooltip>
-							</md-button>
-							<md-button class="md-icon-button" aria-label="View Image" ui-sref="gl.fullImage({imgID: '{{squeeze.link}}'})">
-								<md-icon md-colors="{color: 'primary-800'}" >code</md-icon>
-									<md-tooltip md-direction="bottom">
-											View Image
-										</md-tooltip>
-							</md-button>
-						</div>
-					</td>
-	      </tr>
-	    </tbody>
-	  </table>
-	</md-table-container>
-</div>
-<div class="viewmenu">
-	<md-fab-speed-dial ng-cloak md-open="uiview.menuOpen" md-direction="up" class="md-scale" ng-mouseenter="uiview.menuOpen=true" ng-mouseleave="uiview.menuOpen=false">
-		<md-fab-trigger >
-			<md-button aria-label="menu" class="md-fab md-warn">
-				<md-icon aria-label="{{Icon.arialabel}}">pageview</md-icon>
-			</md-button>
-		</md-fab-trigger>
-
-		<md-fab-actions>
-			<md-button aria-label="List" class="md-fab md-raised md-mini" ng-click="onGrid()">
-				<md-icon aria-label="{{Icon.arialabel}}">view_comfy</md-icon>
-			</md-button>
-			<md-button aria-label="List" class="md-fab md-raised md-mini" ng-click="onList()">
-				<md-icon aria-label="{{Icon.arialabel}}">view_list</md-icon>
-			</md-button>
-			<md-button aria-label="List" class="md-fab md-raised md-mini" ng-click="onMap()">
-				<md-icon aria-label="{{Icon.arialabel}}">map</md-icon>
-			</md-button>
-		</md-fab-actions>
-	</md-fab-speed-dial>
+<div class="pagewrapper" layout="row" layout-align="center start" layout-padding layout-wrap>
+	<md-whiteframe class="md-whiteframe-3dp card subcard" layout="column" flex="noshrink" layout-align="start start">
+		<md-content layout-padding>
+			<h2 class="md-display-1">Simple Search</h2>
+			<div><span>Search the Glaser Collection for a sequence of keywords. <br>
+			Separate them by SPACEs. Use * as wildcards.</span></div>
+			<md-input-container class="md-block" >
+				<label>Search Keyword(s)</label>
+				<input ng-model="Model.keyword">
+			</md-input-container>
+			<md-button class="md-raised md-warn">Submit</md-button>
+		</md-content>
+	</md-whiteframe>
+	<md-whiteframe class="md-whiteframe-3dp card subcard" layout="column" flex="noshrink" layout-align="start start">
+		<md-content layout-padding>
+			<div>
+				<h3 class="md-title"><md-icon class="panelicon">info</md-icon>Information</h3>
+				<div><span>Simple Search currently queries the Fields 'Title' and 'Translation' using an OR logic. And advanced search interface allowing for more complex queries will be available shortly.</span><br><br>
+				<span>This Set contains Data on <br><h2>{{Model.PointerList.length}}</h2> Objects.</span>
+				</div>
+			</div>
+		</md-content>
+	</md-whiteframe>
+	<div class="maincard">
+		<h2 class="md-display-1">Search Results</h2>
+		<md-table-container>
+		  <table md-table md-progress="promise">
+		    <thead md-head>
+		      <tr md-row>
+						<th md-column ><span>ID</span></th>
+		        <th md-column ><span>Title</span></th>
+						<th md-column ><span>Production</span></th>
+		        <th md-column ><span>Actions</span></th>
+		      </tr>
+		    </thead>
+		    <tbody md-body>
+		      <tr md-row
+		      		md-select-id="{{squeeze.priref[0]}}"
+		      		ng-repeat="squeeze in Model.PointerList | filter:Model.keyword"
+		      		class="vspinentry" ng-style="dynStyle" ng-init="dynStyle={'animation-delay':$index/50+'s','overflow':'hidden'}" >
+						<td md-cell>{{squeeze.identification["0"]}}</td>
+						<td md-cell>{{squeeze.title["0"]}}</td>
+						<td md-cell>{{squeeze["production.date.start"]["0"]}}-{{squeeze["production.date.end"]["0"]}}</td>
+		        <td md-cell>
+							<div class="tabletoolbar" layout="row" layout-align="end" ng-if="!squeeze.position" ng-click="$event.stopPropagation()">
+								<md-button class="md-icon-button" aria-label="Details" ui-sref="gl.singleRecord({refID: {{squeeze.priref[0]}}})" target="_blank">
+									<md-icon md-colors="{color: 'primary-800'}" >library_books</md-icon>
+										<md-tooltip md-direction="bottom">
+												Details
+											</md-tooltip>
+								</md-button>
+								<md-button class="md-icon-button" aria-label="View Image" ui-sref="gl.fullImage({imgID: '{{squeeze.link}}'})" target="_blank">
+									<md-icon md-colors="{color: 'primary-800'}" >code</md-icon>
+										<md-tooltip md-direction="bottom">
+												View Image
+											</md-tooltip>
+								</md-button>
+								<md-button class="md-icon-button" aria-label="View Image" ng-href="{{'http://opacikm.w07adlib1.arz.oeaw.ac.at/wwwopac.ashx?command=getcontent&server=images&value=' + squeeze.link + '&imageformat=jpg'}}" target="_blank">
+									<md-icon md-colors="{color: 'primary-800'}" >file_download</md-icon>
+										<md-tooltip md-direction="bottom">
+												Download Image
+											</md-tooltip>
+								</md-button>
+							</div>
+						</td>
+		      </tr>
+		    </tbody>
+		  </table>
+		</md-table-container>
+	</div>
 </div>
